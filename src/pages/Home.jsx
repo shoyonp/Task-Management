@@ -11,7 +11,7 @@ const Home = () => {
     );
   }
   return (
-    <div className="my-6 w-11/12 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+    <div className="my-6 w-11/12 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
       {tasks?.map((task) => (
         <TaskCard key={task._id} task={task} refetch={refetch}></TaskCard>
       ))}

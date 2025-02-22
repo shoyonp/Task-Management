@@ -1,5 +1,6 @@
 import { Link, NavLink } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
   const { user, userSignOut } = useAuth();
@@ -7,14 +8,13 @@ const Navbar = () => {
     <>
       <NavLink to="/home">Home</NavLink>
       <NavLink to="/home/addTask">Add Task</NavLink>
-      <NavLink to="/home/manageTask">Manage Task</NavLink>
     </>
   );
 
   const handleSignOut = () => {
     userSignOut()
       .then(() => {
-        console.log("Logout success");
+        toast.success("Logout success");
       })
       .catch((err) => {
         console.log(err.message);

@@ -1,15 +1,19 @@
 import { FaEdit, FaTrash } from "react-icons/fa";
 import useAxiosPublic from "../hooks/useAxiosPublic";
+import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 
-const TaskCard = ({ task,refetch }) => {
-  const { title, description, category, timestamp,_id } = task || {};
+const TaskCard = ({ task, refetch }) => {
+  const { title, description, category, timestamp, _id } = task || {};
   const axiosPublic = useAxiosPublic();
   //   delete a task
   const handleDelete = (task) => {
-    axiosPublic.delete(`/tasks/${_id}`)
-    .then((res) => {
+    axiosPublic.delete(`/tasks/${_id}`).then((res) => {
       console.log(res.data);
-      refetch()
+      if (res.data.deletedCount > 0) {
+        toast.success("Deleted success");
+        refetch();
+      }
     });
   };
 
@@ -32,10 +36,12 @@ const TaskCard = ({ task,refetch }) => {
         </span>
         {/*  Buttons */}
         <div className="flex justify-between mt-3">
-          <button className="flex items-center gap-2 px-3 py-1 text-sm font-medium text-white bg-blue-600 rounded-lg shadow hover:bg-blue-700 transition">
-            <FaEdit />
-            Edit
-          </button>
+          <Link to={`editTask/${task._id}`}>
+            <button className="flex items-center gap-2 px-3 py-1 text-sm font-medium text-white bg-blue-600 rounded-lg shadow hover:bg-blue-700 transition">
+              <FaEdit />
+              Edit
+            </button>
+          </Link>
           <button
             onClick={() => handleDelete(task)}
             className="flex items-center gap-2 px-3 py-1 text-sm font-medium text-white bg-red-600 rounded-lg shadow hover:bg-red-700 transition"

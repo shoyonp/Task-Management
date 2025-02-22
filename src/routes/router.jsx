@@ -4,8 +4,8 @@ import HomeBanner from "../pages/HomeBanner";
 import Login from "../pages/Login";
 import Home from "../pages/Home";
 import AddTask from "../pages/AddTask";
-import ManageTask from "../pages/ManageTask";
 import PrivateRoute from "./PrivateRoute";
+import EditTask from "../pages/EditTask";
 
 const router = createBrowserRouter([
   {
@@ -29,8 +29,8 @@ const router = createBrowserRouter([
         element: <AddTask></AddTask>,
       },
       {
-        path: "manageTask",
-        element: <ManageTask></ManageTask>,
+        path: "editTask/:id",
+        element: <EditTask></EditTask>
       },
     ],
   },
