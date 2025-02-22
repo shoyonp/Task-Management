@@ -16,10 +16,15 @@ const AuthProvider = ({ children }) => {
 
   const googleLogin = () => {
     setLoading(true);
-    return signInWithPopup(auth, googleProvider);
+    return signInWithPopup(auth, googleProvider)
+      .then((result) => {
+        setUser(result?.user);
+        setLoading(false);
+        return result;
+      })
   };
 
-  const UserSignOut = () => {
+  const userSignOut = () => {
     setLoading(true);
     return signOut(auth);
   };
@@ -33,13 +38,13 @@ const AuthProvider = ({ children }) => {
     loading,
     googleLogin,
     updateUserProfile,
-    UserSignOut,
+    userSignOut,
   };
 
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      setLoading(false)
+      setLoading(false);
       console.log("state captured", currentUser);
     });
     return () => {
