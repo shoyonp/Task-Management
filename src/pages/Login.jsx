@@ -17,11 +17,10 @@ const Login = () => {
         name: result?.user?.displayName,
         userID: result?.user?.uid,
       };
-      axisoPublic.post("/users", userInfo).then((result) => {
-        console.log(result);
+      axisoPublic.post("/users", userInfo)
+      .then((result) => {
         navigate(from, { replace: true });
       });
-      console.log(userInfo);
     });
   };
   return (

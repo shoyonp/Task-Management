@@ -1,6 +1,8 @@
 import { useForm } from "react-hook-form";
 import useAuth from "../hooks/useAuth";
 import useAxiosPublic from "../hooks/useAxiosPublic";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const AddTask = () => {
   const {
@@ -9,20 +11,21 @@ const AddTask = () => {
     formState: { errors },
   } = useForm();
   const { user } = useAuth();
+  const navigate = useNavigate();
   const axiosPublic = useAxiosPublic();
   const onSubmit = (data) => {
-    console.log(data);
     const newTask = {
       ...data,
       timestamp: new Date(),
       email: user?.email,
     };
-    console.log(newTask);
+    // console.log(newTask);
 
-    // axiosPublic.post("/tasks", newTask).then((res) => {
-    //   toast.success("post success");
-    //   navigate("/home");
-    // });
+    axiosPublic.post("/tasks", newTask).then((res) => {
+      console.log(res.data);
+      toast.success("task added");
+      navigate("/home");
+    });
   };
 
   return (
