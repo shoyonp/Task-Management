@@ -16,7 +16,7 @@ const AddTask = () => {
   const onSubmit = (data) => {
     const newTask = {
       ...data,
-      timestamp: new Date(),
+      timestamp: new Date().toLocaleString(),
       email: user?.email,
     };
     // console.log(newTask);
