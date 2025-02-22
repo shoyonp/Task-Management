@@ -1,7 +1,17 @@
 import { FaEdit, FaTrash } from "react-icons/fa";
+import useAxiosPublic from "../hooks/useAxiosPublic";
 
-const TaskCard = ({ task }) => {
-  const { title, description, category, timestamp } = task || {};
+const TaskCard = ({ task,refetch }) => {
+  const { title, description, category, timestamp,_id } = task || {};
+  const axiosPublic = useAxiosPublic();
+  //   delete a task
+  const handleDelete = (task) => {
+    axiosPublic.delete(`/tasks/${_id}`)
+    .then((res) => {
+      console.log(res.data);
+      refetch()
+    });
+  };
 
   return (
     <div className="w-full max-w-sm p-5 bg-white shadow-lg rounded-md border border-gray-200 transition-transform transform hover:scale-105">
@@ -26,7 +36,10 @@ const TaskCard = ({ task }) => {
             <FaEdit />
             Edit
           </button>
-          <button className="flex items-center gap-2 px-3 py-1 text-sm font-medium text-white bg-red-600 rounded-lg shadow hover:bg-red-700 transition">
+          <button
+            onClick={() => handleDelete(task)}
+            className="flex items-center gap-2 px-3 py-1 text-sm font-medium text-white bg-red-600 rounded-lg shadow hover:bg-red-700 transition"
+          >
             <FaTrash />
             Delete
           </button>

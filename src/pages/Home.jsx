@@ -1,25 +1,19 @@
-import React from "react";
-import useAxiosPublic from "../hooks/useAxiosPublic";
-import { useQuery } from "@tanstack/react-query";
 import TaskCard from "../components/TaskCard";
+import useTask from "../hooks/useTask";
 
 const Home = () => {
-  const axiosPublic = useAxiosPublic();
-  const {
-    data: tasks = [],
-    isPending: loading,
-    refetch,
-  } = useQuery({
-    queryKey: ["tasks"],
-    queryFn: async () => {
-      const res = await axiosPublic.get("/tasks");
-      return res.data;
-    },
-  });
+  const { tasks, refetch, loading } = useTask();
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <span className="loading loading-ring loading-lg"></span>
+      </div>
+    );
+  }
   return (
-    <div className="w-11/12 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+    <div className="my-6 w-11/12 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       {tasks?.map((task) => (
-        <TaskCard key={task._id} task={task}></TaskCard>
+        <TaskCard key={task._id} task={task} refetch={refetch}></TaskCard>
       ))}
     </div>
   );
